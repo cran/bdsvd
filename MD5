@@ -1,0 +1,17 @@
+f796ce80ab5fa8c72ef4d270ebe88d76 *DESCRIPTION
+419a3910b173cb9a5384d235666e3269 *NAMESPACE
+e8ed5ae2ff755f7888a092af9803e22e *R/bdsvd.R
+da14ffe96ec9dbecdb26dee32df6d12a *R/hcsvd.R
+7c27328015b757a4a032c952eff9762c *README.md
+55836916a2416bb2576d3cf0ca412e2f *man/bdsvd.Rd
+1df587590a0450646ad1b41359c150a3 *man/bdsvd.cov.sim.Rd
+6f82cd293890af8c134add90af85a026 *man/bdsvd.ht.Rd
+ec6742ecfbfffe2aa2dcd7511414b336 *man/bdsvd.structure.Rd
+2d6892d7886b3cfe62dabeea68c3e6ed *man/block-class.Rd
+70ceddde78845e46a1d9594d5efc31fc *man/detect.blocks.Rd
+6cab592a784a424ad4d12a6b02652eb4 *man/hcsvd.Rd
+c16cd26d7ada80e168327dedc58ff200 *man/hcsvd.cor.sim.Rd
+a1a128b98150dedaa959ac0e50183380 *man/single.bdsvd.Rd
+12264576c454b20456d6e738f403952a *tests/testthat.R
+0ca05f1829f227da8cb22cdf02dd4bd6 *tests/testthat/test-bdsvd.R
+7758f40b1be8812a9d611ace8dc9700a *tests/testthat/test-hcsvd.R
