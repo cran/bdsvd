@@ -35,6 +35,11 @@ The ultrametric distance matrix (cophenetic matrix) of the HC-SVD structure as a
 \item{u.cor}{
 The ultrametric correlation matrix of \eqn{X} obtained by HC-SVD as an object of class \code{matrix}.
 }
+\item{k.p}{
+A vector of length \eqn{p-1} containing the ratio \eqn{k_i/p_i} of the \eqn{k_i} sparse loadings used relative to all sparse
+loadings \eqn{p_i} for the split of each cluster. The ratio is set to \code{NA} if the cluster contains only two variables as the search
+for sparse loadings that reflect the split is not required in this case.
+}
 }
 \description{
 Performs HC-SVD to reveal the hierarchical variable structure as descried in Bauer (202Xb). For this divise approach, each cluster is split into two clusters iteratively. Potential splits
@@ -46,25 +51,27 @@ The sparse loadings are computed using the method by Shen & Huang (2008), implem
 the \code{irlba} package.
 }
 \examples{
-#Replicate simulation study (a) from Bauer (202Xb) with different values for p and b:
+#We replicate the simulation study in Bauer (202Xb)
 
-p <- 60  #Number of variables  (p <- 10 in Bauer (202Xb))
-n <- 300 #Number of observations
-b <- 3   #Number of blocks (b <- 5 in Bauer (202Xb))
+\dontrun{
+p <- 100
+n <- 300
+b <- 5
 design <- "a"
 
-Rho <- hcsvd.cor.sim(p = p, b = b, design = design)
-X <- scale(mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Rho, checkSymmetry = FALSE))
+Rho <- hcsvd.cor.sim(p = p, b = b, design = "a")
+X <- scale(mvtnorm::rmvnorm(300, mean=rep(0,100), sigma=Rho, checkSymmetry = FALSE))
 colnames(X) = 1:ncol(X)
 hcsvd.obj <- hcsvd(X, k = "Kaiser")
 
 #The dendrogram can be obtained from the ultrametric distance matrix:
 plot(hclust(hcsvd.obj$dist.matrix))
+}
 
 
 }
 \references{
-\cite{Bauer, J.O. (202Xb). Divisive hierarchical clustering of variables identified by singular vectors.}
+\cite{Bauer, J.O. (202Xb). Hierarchical variable clustering using singular vectors.}
 
 \cite{Shen, H. and Huang, J.Z. (2008). Sparse principal component analysis via regularized low rank matrix approximation, J. Multivar. Anal. 99, 1015–1034.}
 }

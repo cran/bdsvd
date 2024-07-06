@@ -25,5 +25,5 @@ This function generates correlation matrices based on the simulation studies des
 
 }
 \references{
-\cite{Bauer, J.O. (202Xb). Divisive hierarchical clustering of variables identified by singular vectors.}
+\cite{Bauer, J.O. (202Xb). Hierarchical variable clustering using singular vectors.}
 }
