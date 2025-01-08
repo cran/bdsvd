@@ -19,13 +19,14 @@ This function returns the block structure of a matrix.
 }
 \examples{
 #In the first example, we replicate the simulation study for the ad hoc procedure
-#Est_0.1 from Bauer (202Xa). In the second example, we manually compute the first step
+#Est_0.1 from Bauer (2024). In the second example, we manually compute the first step
 #of BD-SVD, which can be done using the bdsvd() and/or single.bdsvd(), for constructed
 #sparse loadings
 
-#Example 1: Replicate the simulation study (a) from Bauer (202Xa) for the ad hoc
+#Example 1: Replicate the simulation study (a) from Bauer (2024) for the ad hoc
 #procedure Est_0.1.
 
+\dontrun{
 p <- 500 #Number of variables
 n <- 125 #Number of observations
 b <- 500 #Number of blocks
@@ -39,6 +40,7 @@ colnames(X) <- 1:p
 
 #Perform the ad hoc procedure
 detect.blocks(cvCovEst::scadEst(dat = X, lambda = 0.2), threshold = 0)
+}
 
 #Example 2: Manually compute the first step of BD-SVD
 #for some loadings V that mirror the two blocks
@@ -62,8 +64,8 @@ detected.blocks[[2]]@block.columns
 
 }
 \references{
-\cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+\cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 }
 \seealso{
-\link{bdsvd}, \link{single.bdsvd}
+\code{\link{bdsvd}}, \code{\link{single.bdsvd}}
 }

@@ -7,7 +7,7 @@
 bdsvd(X, dof.lim, anp = "2", standardize = TRUE, max.iter, trace = FALSE)
 }
 \arguments{
-\item{X}{Data matrix of dimension \eqn{n x p} with possibly \eqn{p >> n}.}
+\item{X}{Data matrix of dimension \eqn{n}x\eqn{p} with possibly \eqn{p >> n}.}
 
 \item{dof.lim}{Interval limits for the number of non-zero components in the sparse loading (degrees of freedom).
 If \eqn{S} denotes the support of \eqn{v}, then the cardinality of the support, \eqn{|S|},
@@ -15,7 +15,7 @@ corresponds to the degrees of freedom. Default is \code{dof.lim <- c(0, p-1)} wh
 all levels of sparsity.}
 
 \item{anp}{Which regularization function should be used for the HBIC. \code{anp = "1"} implements \eqn{a_{np} = 1} which corresponds
-to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (202Xa), and \code{anp = "3"}
+to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (2024), and \code{anp = "3"}
 implements \eqn{a_{np} = log(log(np))} which corresponds to the regularization used by Wang et al. (2009) and Wang et al. (2013).}
 
 \item{standardize}{Standardize the data to have unit variance. Default is \code{TRUE}.}
@@ -35,25 +35,24 @@ or two submatrices, depending on the structure of the first sparse loading \eqn{
 first right singular vector, i.e., a vector with many zero values) that mirrors the shape of the covariance matrix. This
 procedure is continued iteratively until the block diagonal structure has been revealed.
 
-The data matrix ordered according to this revealed block diagonal structure can be obtained by \link{bdsvd.structure}.
+The data matrix ordered according to this revealed block diagonal structure can be obtained by \code{\link{bdsvd.structure}}.
 }
 \details{
-The sparse loadings are computed using the method by Shen & Huang (2008), implemented in
-the \code{irlba} package.
+The sparse loadings are computed using the method by Shen & Huang (2008), implemented by Baglama, Reichel, and Lewis in \code{\link[irlba]{ssvd}} \{\link[irlba]{irlba}\}.
 }
 \examples{
-#Replicate the simulation study (c) from Bauer (202Xa).
+#Replicate the simulation study (c) from Bauer (2024).
 
 \dontrun{
 p <- 500 #Number of variables
-n <- 250 #Number of observations
+n <- 500 #Number of observations
 b <- 10  #Number of blocks
 design <- "c" #Simulation design "a", "b", "c", or "d".
 
 #Simulate data matrix X
 set.seed(1)
 Sigma <- bdsvd.cov.sim(p = p, b = b, design = design)
-X <- mvtnorm::rmvnorm(n, mean=rep(0, p), sigma=Sigma)
+X <- mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Sigma)
 colnames(X) <- seq_len(p)
 
 bdsvd(X, standardize = FALSE)
@@ -61,12 +60,12 @@ bdsvd(X, standardize = FALSE)
 
 }
 \references{
-\cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+\cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 
 \cite{Wang, H., B. Li, and C. Leng (2009). Shrinkage tuning parameter selection with a diverging number of parameters, J. R. Stat. Soc. B 71 (3), 671–683.}
 
 \cite{Wang, L., Y. Kim, and R. Li (2013). Calibrating nonconvex penalized regression in ultra-high dimension, Ann. Stat. 41 (5), 2505–2536.}
 }
 \seealso{
-\link{bdsvd.structure}, \link{bdsvd.ht}, \link{single.bdsvd}
+\code{\link{bdsvd.structure}}, \code{\link{bdsvd.ht}}, \code{\link{single.bdsvd}}
 }

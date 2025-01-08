@@ -94,9 +94,9 @@ setClass("block", slots = c(features = "vector", block.columns = "vector"))
 #' first right singular vector, i.e., a vector with many zero values) that mirrors the shape of the covariance matrix. This
 #' procedure is continued iteratively until the block diagonal structure has been revealed.
 #'
-#' The data matrix ordered according to this revealed block diagonal structure can be obtained by \link{bdsvd.structure}.
+#' The data matrix ordered according to this revealed block diagonal structure can be obtained by \code{\link{bdsvd.structure}}.
 #'
-#' @param X Data matrix of dimension \eqn{n x p} with possibly \eqn{p >> n}.
+#' @param X Data matrix of dimension \eqn{n}x\eqn{p} with possibly \eqn{p >> n}.
 #'
 #' @param dof.lim Interval limits for the number of non-zero components in the sparse loading (degrees of freedom).
 #' If \eqn{S} denotes the support of \eqn{v}, then the cardinality of the support, \eqn{|S|},
@@ -104,7 +104,7 @@ setClass("block", slots = c(features = "vector", block.columns = "vector"))
 #' all levels of sparsity.
 #'
 #' @param anp Which regularization function should be used for the HBIC. \code{anp = "1"} implements \eqn{a_{np} = 1} which corresponds
-#' to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (202Xa), and \code{anp = "3"}
+#' to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (2024), and \code{anp = "3"}
 #' implements \eqn{a_{np} = log(log(np))} which corresponds to the regularization used by Wang et al. (2009) and Wang et al. (2013).
 #'
 #'
@@ -116,32 +116,31 @@ setClass("block", slots = c(features = "vector", block.columns = "vector"))
 #' @param trace Print out progress as iterations are performed. Default is \code{TRUE}.
 #'
 #' @details
-#' The sparse loadings are computed using the method by Shen & Huang (2008), implemented in
-#' the \code{irlba} package.
+#' The sparse loadings are computed using the method by Shen & Huang (2008), implemented by Baglama, Reichel, and Lewis in \code{\link[irlba]{ssvd}} \{\link[irlba]{irlba}\}.
 #'
 #' @return
 #' A list containing the feature names of the submatrices of \code{X}. The length of the list equals
 #' the number of submatrices.
 #'
-#' @seealso \link{bdsvd.structure}, \link{bdsvd.ht}, \link{single.bdsvd}
+#' @seealso \code{\link{bdsvd.structure}}, \code{\link{bdsvd.ht}}, \code{\link{single.bdsvd}}
 #'
-#' @references \cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+#' @references \cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 #' @references \cite{Wang, H., B. Li, and C. Leng (2009). Shrinkage tuning parameter selection with a diverging number of parameters, J. R. Stat. Soc. B 71 (3), 671–683.}
 #' @references \cite{Wang, L., Y. Kim, and R. Li (2013). Calibrating nonconvex penalized regression in ultra-high dimension, Ann. Stat. 41 (5), 2505–2536.}
 #'
 #' @examples
-#' #Replicate the simulation study (c) from Bauer (202Xa).
+#' #Replicate the simulation study (c) from Bauer (2024).
 #'
 #' \dontrun{
 #' p <- 500 #Number of variables
-#' n <- 250 #Number of observations
+#' n <- 500 #Number of observations
 #' b <- 10  #Number of blocks
 #' design <- "c" #Simulation design "a", "b", "c", or "d".
 #'
 #' #Simulate data matrix X
 #' set.seed(1)
 #' Sigma <- bdsvd.cov.sim(p = p, b = b, design = design)
-#' X <- mvtnorm::rmvnorm(n, mean=rep(0, p), sigma=Sigma)
+#' X <- mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Sigma)
 #' colnames(X) <- seq_len(p)
 #'
 #' bdsvd(X, standardize = FALSE)
@@ -242,7 +241,7 @@ bdsvd <- function(X,
 
 #' @title Covariance Matrix Simulation for BD-SVD
 #'
-#' @description This function generates covariance matrices based on the simulation studies described in Bauer (202Xa).
+#' @description This function generates covariance matrices based on the simulation studies described in Bauer (2024).
 #'
 #' @param p Number of variables.
 #'
@@ -253,7 +252,7 @@ bdsvd <- function(X,
 #' @return
 #' A covariance matrix according to the chosen simulation design.
 #'
-#' @references \cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+#' @references \cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 #'
 #' @examples
 #' #The covariance matrix for simulation design (a) is given by
@@ -344,7 +343,7 @@ bdsvd.cov.sim <- function(p = p,
 #' all levels of sparsity.
 #'
 #' @param anp Which regularization function should be used for the HBIC. \code{anp = "1"} implements \eqn{a_{np} = 1} which corresponds
-#' to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (202Xa), and \code{anp = "3"}
+#' to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (2024), and \code{anp = "3"}
 #' implements \eqn{a_{np} = log(log(np))} which corresponds to the regularization used by Wang et al. (2009) and Wang et al. (2013).
 #'
 #' @param standardize Standardize the data to have unit variance. Default is \code{TRUE}.
@@ -354,7 +353,7 @@ bdsvd.cov.sim <- function(p = p,
 #'
 #' @details
 #' The sparse loadings are computed using the method by Shen & Huang (2008), implemented in
-#' the \code{irlba} package. The computation of the HBIC is outlined in Bauer (202Xa).
+#' the \code{irlba} package. The computation of the HBIC is outlined in Bauer (2024).
 #'
 #' @return
 #' \item{dof}{
@@ -364,18 +363,18 @@ bdsvd.cov.sim <- function(p = p,
 #'   The HBIC for the different numbers of nonzero components.
 #' }
 #'
-#' @seealso \link{bdsvd}, \link{single.bdsvd}
+#' @seealso \code{\link{bdsvd}}, \code{\link{single.bdsvd}}
 #'
-#' @references \cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+#' @references \cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 #' @references \cite{Shen, H. and Huang, J.Z. (2008). Sparse principal component analysis via regularized low rank matrix approximation, J. Multivar. Anal. 99, 1015–1034.}
 #' @references \cite{Wang, H., B. Li, and C. Leng (2009). Shrinkage tuning parameter selection with a diverging number of parameters, J. R. Stat. Soc. B 71 (3), 671–683.}
 #' @references \cite{Wang, L., Y. Kim, and R. Li (2013). Calibrating nonconvex penalized regression in ultra-high dimension, Ann. Stat. 41 (5), 2505–2536.}
 #'
 #' @examples
-#' #Replicate the illustrative example from Bauer (202Xa).
+#' #Replicate the illustrative example from Bauer (2024).
 #'
 #'
-#' p <- 300 #Number of variables. In Bauer (202Xa), p = 3000
+#' p <- 300 #Number of variables. In Bauer (2024), p = 3000
 #' n <- 500 #Number of observations
 #' b <- 3   #Number of blocks
 #' design <- "c"
@@ -383,7 +382,7 @@ bdsvd.cov.sim <- function(p = p,
 #' #Simulate data matrix X
 #' set.seed(1)
 #' Sigma <- bdsvd.cov.sim(p = p, b = b, design = design)
-#' X <- mvtnorm::rmvnorm(n, mean=rep(0, p), sigma=Sigma)
+#' X <- mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Sigma)
 #' colnames(X) <- seq_len(p)
 #'
 #' ht <- bdsvd.ht(X)
@@ -484,15 +483,15 @@ bdsvd.ht <- function(X,
 #' Either the data matrix \code{X} with columns sorted according to the detected blocks, or a list containing the detected
 #' submatrices.
 #'
-#' @seealso \link{bdsvd}, \link{single.bdsvd}
+#' @seealso \code{\link{bdsvd}}, \code{\link{single.bdsvd}}
 #'
-#' @references \cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+#' @references \cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 #'
 #' @examples
-#' #Toying with the illustrative example from Bauer (202Xa).
+#' #Toying with the illustrative example from Bauer (2024).
 #'
 #'
-#' p <- 150 #Number of variables. In Bauer (202Xa), p = 3000.
+#' p <- 150 #Number of variables. In Bauer (2024), p = 3000.
 #' n <- 500 #Number of observations
 #' b <- 3   #Number of blocks
 #' design <- "c"
@@ -500,7 +499,7 @@ bdsvd.ht <- function(X,
 #' #Simulate data matrix X
 #' set.seed(1)
 #' Sigma <- bdsvd.cov.sim(p = p, b = b, design = design)
-#' X <- mvtnorm::rmvnorm(n, mean=rep(0, p), sigma=Sigma)
+#' X <- mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Sigma)
 #' colnames(X) <- seq_len(p)
 #'
 #' #Compute iterative BD-SVD
@@ -573,19 +572,20 @@ bdsvd.structure <- function(X,
 #' @return
 #' An object of class \code{Block} containing the features and columns indices corresponding to each detected block.
 #'
-#' @seealso \link{bdsvd}, \link{single.bdsvd}
+#' @seealso \code{\link{bdsvd}}, \code{\link{single.bdsvd}}
 #'
-#' @references \cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+#' @references \cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 #'
 #' @examples
 #' #In the first example, we replicate the simulation study for the ad hoc procedure
-#' #Est_0.1 from Bauer (202Xa). In the second example, we manually compute the first step
+#' #Est_0.1 from Bauer (2024). In the second example, we manually compute the first step
 #' #of BD-SVD, which can be done using the bdsvd() and/or single.bdsvd(), for constructed
 #' #sparse loadings
 #'
-#' #Example 1: Replicate the simulation study (a) from Bauer (202Xa) for the ad hoc
+#' #Example 1: Replicate the simulation study (a) from Bauer (2024) for the ad hoc
 #' #procedure Est_0.1.
 #'
+#'\dontrun{
 #' p <- 500 #Number of variables
 #' n <- 125 #Number of observations
 #' b <- 500 #Number of blocks
@@ -599,6 +599,7 @@ bdsvd.structure <- function(X,
 #'
 #' #Perform the ad hoc procedure
 #' detect.blocks(cvCovEst::scadEst(dat = X, lambda = 0.2), threshold = 0)
+#' }
 #'
 #' #Example 2: Manually compute the first step of BD-SVD
 #' #for some loadings V that mirror the two blocks
@@ -666,17 +667,17 @@ detect.blocks <- function(V,
 #' A list containing the feature names of the submatrices of \code{X}. It is either of length one (no
 #' split) or length two (split into two submatrices).
 #'
-#' @seealso \link{bdsvd}, \link{bdsvd.ht}
+#' @seealso \code{\link{bdsvd}}, \code{\link{bdsvd.ht}}
 #'
-#' @references \cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+#' @references \cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 #' @references \cite{Shen, H. and Huang, J.Z. (2008). Sparse principal component analysis via regularized low rank matrix approximation, J. Multivar. Anal. 99, 1015–1034.}
 #'
 #' @examples
-#' #Replicate the illustrative example from Bauer (202Xa).
+#' #Replicate the illustrative example from Bauer (2024).
 #'
 #' \dontrun{
 #'
-#' p <- 300 #Number of variables. In Bauer (202Xa), p = 3000.
+#' p <- 300 #Number of variables. In Bauer (2024), p = 3000.
 #' n <- 500 #Number of observations
 #' b <- 3   #Number of blocks
 #' design <- "c"
@@ -684,7 +685,7 @@ detect.blocks <- function(V,
 #' #Simulate data matrix X
 #' set.seed(1)
 #' Sigma <- bdsvd.cov.sim(p = p, b = b, design = design)
-#' X <- mvtnorm::rmvnorm(n, mean=rep(0, p), sigma=Sigma)
+#' X <- mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Sigma)
 #' colnames(X) <- 1:p
 #'
 #' ht <- bdsvd.ht(X)
@@ -720,6 +721,11 @@ single.bdsvd <- function(X,
   if (length(colnames(X)) == 0) {
     colnames(X) <- as.character(seq_len(p))
   }
+
+  if (length(unique(colnames(X))) != p) {
+    stop("Variable names are not unique")
+  }
+
   feature.names <- colnames(X)
   eigen <- list()
 

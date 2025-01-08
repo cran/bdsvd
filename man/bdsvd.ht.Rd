@@ -17,7 +17,7 @@ all levels of sparsity.}
 \item{standardize}{Standardize the data to have unit variance. Default is \code{TRUE}.}
 
 \item{anp}{Which regularization function should be used for the HBIC. \code{anp = "1"} implements \eqn{a_{np} = 1} which corresponds
-to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (202Xa), and \code{anp = "3"}
+to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (2024), and \code{anp = "3"}
 implements \eqn{a_{np} = log(log(np))} which corresponds to the regularization used by Wang et al. (2009) and Wang et al. (2013).}
 
 \item{max.iter}{How many iterations should be performed for computing the sparse loading.
@@ -37,13 +37,13 @@ Bayesian information criterion (HBIC).
 }
 \details{
 The sparse loadings are computed using the method by Shen & Huang (2008), implemented in
-the \code{irlba} package. The computation of the HBIC is outlined in Bauer (202Xa).
+the \code{irlba} package. The computation of the HBIC is outlined in Bauer (2024).
 }
 \examples{
-#Replicate the illustrative example from Bauer (202Xa).
+#Replicate the illustrative example from Bauer (2024).
 
 
-p <- 300 #Number of variables. In Bauer (202Xa), p = 3000
+p <- 300 #Number of variables. In Bauer (2024), p = 3000
 n <- 500 #Number of observations
 b <- 3   #Number of blocks
 design <- "c"
@@ -51,7 +51,7 @@ design <- "c"
 #Simulate data matrix X
 set.seed(1)
 Sigma <- bdsvd.cov.sim(p = p, b = b, design = design)
-X <- mvtnorm::rmvnorm(n, mean=rep(0, p), sigma=Sigma)
+X <- mvtnorm::rmvnorm(n, mean = rep(0, p), sigma = Sigma)
 colnames(X) <- seq_len(p)
 
 ht <- bdsvd.ht(X)
@@ -60,7 +60,7 @@ single.bdsvd(X, dof = ht$dof, standardize = FALSE)
 
 }
 \references{
-\cite{Bauer, J.O. (202Xa). High-dimensional block diagonal covariance structure detection using singular vectors.}
+\cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
 
 \cite{Shen, H. and Huang, J.Z. (2008). Sparse principal component analysis via regularized low rank matrix approximation, J. Multivar. Anal. 99, 1015–1034.}
 
@@ -69,5 +69,5 @@ single.bdsvd(X, dof = ht$dof, standardize = FALSE)
 \cite{Wang, L., Y. Kim, and R. Li (2013). Calibrating nonconvex penalized regression in ultra-high dimension, Ann. Stat. 41 (5), 2505–2536.}
 }
 \seealso{
-\link{bdsvd}, \link{single.bdsvd}
+\code{\link{bdsvd}}, \code{\link{single.bdsvd}}
 }
