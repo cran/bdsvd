@@ -16,9 +16,13 @@ all levels of sparsity.}
 
 \item{standardize}{Standardize the data to have unit variance. Default is \code{TRUE}.}
 
-\item{anp}{Which regularization function should be used for the HBIC. \code{anp = "1"} implements \eqn{a_{np} = 1} which corresponds
-to the BIC, \code{anp = "2"} implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (2024), and \code{anp = "3"}
-implements \eqn{a_{np} = log(log(np))} which corresponds to the regularization used by Wang et al. (2009) and Wang et al. (2013).}
+\item{anp}{Which regularization function should be used for the HBIC.
+\itemize{
+\item \code{"1"}: implements \eqn{a_{np} = 1} which corresponds to the BIC.
+\item \code{"2"}: implements \eqn{a_{np} = 1/2 log(np)} which corresponds to the regularization used by Bauer (2025).
+\item \code{"3"}: implements \eqn{a_{np} = log(log(np))}.
+\item \code{"4"}: implements \eqn{a_{np} = log(log(p))} which corresponds to the regularization used by Wang et al. (2009) and Wang et al. (2013).
+}}
 
 \item{max.iter}{How many iterations should be performed for computing the sparse loading.
 Default is \code{200}.}
@@ -36,14 +40,15 @@ Finds the number of non-zero elements of the sparse loading according to the hig
 Bayesian information criterion (HBIC).
 }
 \details{
-The sparse loadings are computed using the method by Shen & Huang (2008), implemented in
-the \code{irlba} package. The computation of the HBIC is outlined in Bauer (2024).
+The sparse loadings are computed using the method proposed by Shen & Huang (2008). The corresponding implementation is written in \code{Rcpp}/\code{RcppArmadillo}
+for computational efficiency and is based on the \code{R} implementation by Baglama, Reichel, and Lewis in \code{\link[irlba]{ssvd}} \pkg{irlba}.
+However, the implementation has been adapted to better align with the scope of the \pkg{bdsvd} package. The computation of the HBIC is outlined in Bauer (2025).
 }
 \examples{
-#Replicate the illustrative example from Bauer (2024).
+#Replicate the illustrative example from Bauer (2025).
 
 
-p <- 300 #Number of variables. In Bauer (2024), p = 3000
+p <- 300 #Number of variables. In Bauer (2025), p = 3000
 n <- 500 #Number of observations
 b <- 3   #Number of blocks
 design <- "c"
@@ -60,7 +65,7 @@ single.bdsvd(X, dof = ht$dof, standardize = FALSE)
 
 }
 \references{
-\cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
+\cite{Bauer, J.O. (2025). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat., 34(3), 1005–1016}
 
 \cite{Shen, H. and Huang, J.Z. (2008). Sparse principal component analysis via regularized low rank matrix approximation, J. Multivar. Anal. 99, 1015–1034.}
 

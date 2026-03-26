@@ -29,15 +29,16 @@ approximation of the first right singular vector, i.e., a vector with many zero 
 shape of the covariance matrix.
 }
 \details{
-The sparse loadings are computed using the method by Shen & Huang (2008), implemented in
-the \code{irlba} package.
+The sparse loadings are computed using the method proposed by Shen & Huang (2008). The corresponding implementation is written in \code{Rcpp}/\code{RcppArmadillo}
+for computational efficiency and is based on the \code{R} implementation by Baglama, Reichel, and Lewis in \code{\link[irlba]{ssvd}} \pkg{irlba}.
+However, the implementation has been adapted to better align with the scope of the \pkg{bdsvd} package.
 }
 \examples{
-#Replicate the illustrative example from Bauer (2024).
+#Replicate the illustrative example from Bauer (2025).
 
 \dontrun{
 
-p <- 300 #Number of variables. In Bauer (2024), p = 3000.
+p <- 300 #Number of variables. In Bauer (2025), p = 3000.
 n <- 500 #Number of observations
 b <- 3   #Number of blocks
 design <- "c"
@@ -56,7 +57,7 @@ single.bdsvd(X, dof = ht$dof, standardize = FALSE)
 
 }
 \references{
-\cite{Bauer, J.O. (2024). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat.}
+\cite{Bauer, J.O. (2025). High-dimensional block diagonal covariance structure detection using singular vectors, J. Comput. Graph. Stat., 34(3), 1005–1016}
 
 \cite{Shen, H. and Huang, J.Z. (2008). Sparse principal component analysis via regularized low rank matrix approximation, J. Multivar. Anal. 99, 1015–1034.}
 }
